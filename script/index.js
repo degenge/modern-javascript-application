@@ -2,11 +2,6 @@ import { getWeather, getForecast } from './library_weather.js';
 import * as ENUMS from './enums.js';
 import * as elem from './elements.js';
 
-// const cityElement = document.getElementById('city'),
-//     searchButton = document.getElementById('search'),
-//     dayButton = document.getElementById('day'),
-//     nightButton = document.getElementById('night');
-
 // APP CONSTANTS
 const preferredCity = 'dendermonde';
 

@@ -1,28 +1,10 @@
 import {formatDate} from './library_date.js';
 import {convertToProperCase} from "./library_helpers.js";
 import * as ENUMS from './enums.js';
+import * as elem from './elements.js';
 
 const OPENWEATHER_KEY = 'bb0e1f790c8db79e3532961bf204d7aa',
     OPENWEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/';
-
-const
-    locationElement = document.getElementById('location'),
-    currentDateElement = document.getElementById('currentDate'),
-    currentTemperatureValue = document.getElementById('currentTemperatureValue'),
-    currentTemperatureFeelsLikeValue = document.getElementById('currentTemperatureFeelsLikeValue'),
-    currentTemperatureSummary = document.getElementById('currentTemperatureSummary'),
-    currentTemperatureIcon = document.getElementById('currentTemperatureIcon'),
-    currentStatsTemperatureHighValue = document.getElementById('currentStatsTemperatureHighValue'),
-    currentStatsTemperatureLowValue = document.getElementById('currentStatsTemperatureLowValue'),
-    currentStatsWindSpeedValue = document.getElementById('currentStatsWindSpeedValue'),
-    currentStatsCloudsValue = document.getElementById('currentStatsCloudsValue'),
-    currentStatsPressureValue = document.getElementById('currentStatsPressureValue'),
-    currentStatsHumidityValue = document.getElementById('currentStatsHumidityValue'),
-    currentStatsSunriseValue = document.getElementById('currentStatsSunriseValue'),
-    currentStatsSunsetValue = document.getElementById('currentStatsSunsetValue'),
-    nextFiveDaysContainer = document.getElementById('nextFiveDaysContainer'),
-    nextFiveDaysChart = document.getElementById('nextFiveDaysChart');
-
 
 export function getWeather(cityName) {
     let url = OPENWEATHER_API_URL + 'weather?q=' + cityName + '&APPID=' + OPENWEATHER_KEY;
@@ -118,38 +100,38 @@ function getUvIndex(lat, lon) {
 
 function drawWeather(openweatherData) {
     // LOCATION
-    locationElement.innerHTML = openweatherData.name + ', ' + openweatherData.sys.country;
-    currentDateElement.innerHTML = formatDate(openweatherData.dt, '', true);
+    elem.locationElement.innerHTML = openweatherData.name + ', ' + openweatherData.sys.country;
+    elem.currentDateElement.innerHTML = formatDate(openweatherData.dt, '', true);
 
     // CURRENT TEMPERATURE
     // "http://openweathermap.org/img/wn/" + openweatherData.weather[0].icon + "@2x.png";
     const CURRENT_TEMPERATURE = calculateTemperature(openweatherData.main.temp, ENUMS.TEMPERATURE_SCALES.CELCIUS),
         CURRENT_TEMPERATURE_FEELSLIKE = calculateTemperature(openweatherData.main.feels_like, ENUMS.TEMPERATURE_SCALES.CELCIUS),
         CURRENT_TEMPERATURE_WEATHERICON = "images/" + openweatherData.weather[0].icon + ".svg";
-    currentTemperatureValue.innerHTML = CURRENT_TEMPERATURE + '&deg;';
-    currentTemperatureFeelsLikeValue.innerHTML = 'Feels like ' + CURRENT_TEMPERATURE_FEELSLIKE + '&deg;';
-    currentTemperatureSummary.innerHTML = convertToProperCase(openweatherData.weather[0].description);
-    currentTemperatureIcon.setAttribute('src', CURRENT_TEMPERATURE_WEATHERICON);
+    elem.currentTemperatureValue.innerHTML = CURRENT_TEMPERATURE + '&deg;';
+    elem.currentTemperatureFeelsLikeValue.innerHTML = 'Feels like ' + CURRENT_TEMPERATURE_FEELSLIKE + '&deg;';
+    elem.currentTemperatureSummary.innerHTML = convertToProperCase(openweatherData.weather[0].description);
+    elem.currentTemperatureIcon.setAttribute('src', CURRENT_TEMPERATURE_WEATHERICON);
 
     // CURRENT STATS
     const CURRENT_TEMPERATURE_HIGH = calculateTemperature(openweatherData.main.temp_max, ENUMS.TEMPERATURE_SCALES.CELCIUS),
         CURRENT_TEMPERATURE_LOW = calculateTemperature(openweatherData.main.temp_min, ENUMS.TEMPERATURE_SCALES.CELCIUS);
-    currentStatsTemperatureHighValue.innerHTML = CURRENT_TEMPERATURE_HIGH + '&deg;';
-    currentStatsTemperatureLowValue.innerHTML = CURRENT_TEMPERATURE_LOW + '&deg;';
+    elem.currentStatsTemperatureHighValue.innerHTML = CURRENT_TEMPERATURE_HIGH + '&deg;';
+    elem.currentStatsTemperatureLowValue.innerHTML = CURRENT_TEMPERATURE_LOW + '&deg;';
 
-    currentStatsPressureValue.innerText = openweatherData.main.pressure + 'hPa';
-    currentStatsHumidityValue.innerText = openweatherData.main.humidity + '%';
+    elem.currentStatsPressureValue.innerText = openweatherData.main.pressure + 'hPa';
+    elem.currentStatsHumidityValue.innerText = openweatherData.main.humidity + '%';
 
-    currentStatsWindSpeedValue.innerText = openweatherData.wind.speed + 'm/s';
-    currentStatsCloudsValue.innerText = openweatherData.clouds.all + '%';
+    elem.currentStatsWindSpeedValue.innerText = openweatherData.wind.speed + 'm/s';
+    elem.currentStatsCloudsValue.innerText = openweatherData.clouds.all + '%';
 
-    currentStatsSunriseValue.innerText = formatDate(openweatherData.sys.sunrise, 'time', true);
-    currentStatsSunsetValue.innerText = formatDate(openweatherData.sys.sunset, 'time', true);
+    elem.currentStatsSunriseValue.innerText = formatDate(openweatherData.sys.sunrise, 'time', true);
+    elem.currentStatsSunsetValue.innerText = formatDate(openweatherData.sys.sunset, 'time', true);
 }
 
 function drawForecast(openweatherDataModified) {
     // clear the container first
-    nextFiveDaysContainer.innerText = '';
+    elem.nextFiveDaysContainer.innerText = '';
 
     openweatherDataModified.forEach((openweatherDataModifiedElement) => {
         // DAY
@@ -236,7 +218,7 @@ function drawForecast(openweatherDataModified) {
         ROW_ELEMENT.appendChild(ELEMENT_5);
         ROW_ELEMENT.appendChild(ELEMENT_6);
 
-        nextFiveDaysContainer.appendChild(ROW_ELEMENT);
+        elem.nextFiveDaysContainer.appendChild(ROW_ELEMENT);
     });
 
 }
@@ -252,7 +234,7 @@ function drawForecastTemperature(openweatherDataModified) {
         CHART_DATA.data.push(calculateTemperature(openweatherDataModifiedElement.main.temp, ENUMS.TEMPERATURE_SCALES.CELCIUS));
     });
 
-    const CTX = nextFiveDaysChart.getContext('2d');
+    const CTX = elem.nextFiveDaysChart.getContext('2d');
     const TEMPERATURE_LINE_CHART = new Chart(CTX, {
         type: 'line',
         data: {
