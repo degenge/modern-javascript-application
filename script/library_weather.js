@@ -1,7 +1,31 @@
-const OPENWEATHER_KEY = 'bb0e1f790c8db79e3532961bf204d7aa';
+import {formatDate} from './library_date.js';
+import {convertToProperCase} from "./library_helpers.js";
+import * as ENUMS from './enums.js';
 
-function getWeather(cityName) {
-    let url = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&APPID=' + OPENWEATHER_KEY;
+const OPENWEATHER_KEY = 'bb0e1f790c8db79e3532961bf204d7aa',
+    OPENWEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/';
+
+const
+    locationElement = document.getElementById('location'),
+    currentDateElement = document.getElementById('currentDate'),
+    currentTemperatureValue = document.getElementById('currentTemperatureValue'),
+    currentTemperatureFeelsLikeValue = document.getElementById('currentTemperatureFeelsLikeValue'),
+    currentTemperatureSummary = document.getElementById('currentTemperatureSummary'),
+    currentTemperatureIcon = document.getElementById('currentTemperatureIcon'),
+    currentStatsTemperatureHighValue = document.getElementById('currentStatsTemperatureHighValue'),
+    currentStatsTemperatureLowValue = document.getElementById('currentStatsTemperatureLowValue'),
+    currentStatsWindSpeedValue = document.getElementById('currentStatsWindSpeedValue'),
+    currentStatsCloudsValue = document.getElementById('currentStatsCloudsValue'),
+    currentStatsPressureValue = document.getElementById('currentStatsPressureValue'),
+    currentStatsHumidityValue = document.getElementById('currentStatsHumidityValue'),
+    currentStatsSunriseValue = document.getElementById('currentStatsSunriseValue'),
+    currentStatsSunsetValue = document.getElementById('currentStatsSunsetValue'),
+    nextFiveDaysContainer = document.getElementById('nextFiveDaysContainer'),
+    nextFiveDaysChart = document.getElementById('nextFiveDaysChart');
+
+
+export function getWeather(cityName) {
+    let url = OPENWEATHER_API_URL + 'weather?q=' + cityName + '&APPID=' + OPENWEATHER_KEY;
     //console.log(url);
     fetch(url)
         .then(function (resp) {
@@ -18,8 +42,8 @@ function getWeather(cityName) {
         });
 }
 
-function getForecast(cityName, timeMode) {
-    let url = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&APPID=' + OPENWEATHER_KEY;
+export function getForecast(cityName, timeMode) {
+    let url = OPENWEATHER_API_URL + 'forecast?q=' + cityName + '&APPID=' + OPENWEATHER_KEY;
     //console.log(url);
     fetch(url)
         .then(function (resp) {
@@ -58,9 +82,9 @@ function getForecast(cityName, timeMode) {
             });
 
             switch (timeMode) {
-                case TIME_MODES.DAY:
+                case ENUMS.TIME_MODES.DAY:
                     return tempResultsDay;
-                case TIME_MODES.NIGHT:
+                case ENUMS.TIME_MODES.NIGHT:
                     return tempResultsNight;
                 default:
                     return;
@@ -79,7 +103,7 @@ function getForecast(cityName, timeMode) {
 // todo: implement uv-index
 function getUvIndex(lat, lon) {
     //http://api.openweathermap.org/data/2.5/uvi?appid=bb0e1f790c8db79e3532961bf204d7aa&lat=51.03&lon=4.08
-    let url = 'https://api.openweathermap.org/data/2.5/uvi?appid=' + OPENWEATHER_KEY + '&lat=' + lat + '&lon=' + lon;
+    let url = OPENWEATHER_API_URL + 'uvi?appid=' + OPENWEATHER_KEY + '&lat=' + lat + '&lon=' + lon;
     fetch(url)
         .then(function (resp) {
             return resp.json()
@@ -99,17 +123,17 @@ function drawWeather(openweatherData) {
 
     // CURRENT TEMPERATURE
     // "http://openweathermap.org/img/wn/" + openweatherData.weather[0].icon + "@2x.png";
-    const CURRENT_TEMPERATURE = calculateTemperature(openweatherData.main.temp, TEMPERATURE_SCALES.CELCIUS),
-        CURRENT_TEMPERATURE_FEELSLIKE = calculateTemperature(openweatherData.main.feels_like, TEMPERATURE_SCALES.CELCIUS),
+    const CURRENT_TEMPERATURE = calculateTemperature(openweatherData.main.temp, ENUMS.TEMPERATURE_SCALES.CELCIUS),
+        CURRENT_TEMPERATURE_FEELSLIKE = calculateTemperature(openweatherData.main.feels_like, ENUMS.TEMPERATURE_SCALES.CELCIUS),
         CURRENT_TEMPERATURE_WEATHERICON = "images/" + openweatherData.weather[0].icon + ".svg";
     currentTemperatureValue.innerHTML = CURRENT_TEMPERATURE + '&deg;';
     currentTemperatureFeelsLikeValue.innerHTML = 'Feels like ' + CURRENT_TEMPERATURE_FEELSLIKE + '&deg;';
-    currentTemperatureSummary.innerHTML = openweatherData.weather[0].description.toProperCase();
+    currentTemperatureSummary.innerHTML = convertToProperCase(openweatherData.weather[0].description);
     currentTemperatureIcon.setAttribute('src', CURRENT_TEMPERATURE_WEATHERICON);
 
     // CURRENT STATS
-    const CURRENT_TEMPERATURE_HIGH = calculateTemperature(openweatherData.main.temp_max, TEMPERATURE_SCALES.CELCIUS),
-        CURRENT_TEMPERATURE_LOW = calculateTemperature(openweatherData.main.temp_min, TEMPERATURE_SCALES.CELCIUS);
+    const CURRENT_TEMPERATURE_HIGH = calculateTemperature(openweatherData.main.temp_max, ENUMS.TEMPERATURE_SCALES.CELCIUS),
+        CURRENT_TEMPERATURE_LOW = calculateTemperature(openweatherData.main.temp_min, ENUMS.TEMPERATURE_SCALES.CELCIUS);
     currentStatsTemperatureHighValue.innerHTML = CURRENT_TEMPERATURE_HIGH + '&deg;';
     currentStatsTemperatureLowValue.innerHTML = CURRENT_TEMPERATURE_LOW + '&deg;';
 
@@ -151,7 +175,7 @@ function drawForecast(openweatherDataModified) {
         VALUE_2.appendChild(IMAGE_ICON);
         const LABEL_2 = document.createElement('div');
         LABEL_2.setAttribute('class', 'next-5-days__label');
-        LABEL_2.innerText = openweatherDataModifiedElement.weather[0].description.toProperCase();
+        LABEL_2.innerText = convertToProperCase(openweatherDataModifiedElement.weather[0].description);
         ELEMENT_2.appendChild(VALUE_2);
         ELEMENT_2.appendChild(LABEL_2);
 
@@ -160,7 +184,7 @@ function drawForecast(openweatherDataModified) {
         ELEMENT_3.setAttribute('class', 'next-5-days__low');
         const VALUE_3 = document.createElement('div');
         VALUE_3.setAttribute('class', 'next-5-days__value');
-        VALUE_3.innerHTML = calculateTemperature(openweatherDataModifiedElement.main.temp_min, TEMPERATURE_SCALES.CELCIUS) + '&deg;';
+        VALUE_3.innerHTML = calculateTemperature(openweatherDataModifiedElement.main.temp_min, ENUMS.TEMPERATURE_SCALES.CELCIUS) + '&deg;';
         const LABEL_3 = document.createElement('div');
         LABEL_3.setAttribute('class', 'next-5-days__label');
         LABEL_3.innerText = 'Low';
@@ -172,7 +196,7 @@ function drawForecast(openweatherDataModified) {
         ELEMENT_4.setAttribute('class', 'next-5-days__high');
         const VALUE_4 = document.createElement('div');
         VALUE_4.setAttribute('class', 'next-5-days__value');
-        VALUE_4.innerHTML = calculateTemperature(openweatherDataModifiedElement.main.temp_max, TEMPERATURE_SCALES.CELCIUS) + '&deg;';
+        VALUE_4.innerHTML = calculateTemperature(openweatherDataModifiedElement.main.temp_max, ENUMS.TEMPERATURE_SCALES.CELCIUS) + '&deg;';
         const LABEL_4 = document.createElement('div');
         LABEL_4.setAttribute('class', 'next-5-days__label');
         LABEL_4.innerText = 'High';
@@ -225,7 +249,7 @@ function drawForecastTemperature(openweatherDataModified) {
     openweatherDataModified.forEach((openweatherDataModifiedElement) => {
         let dataLegend = [formatDate(openweatherDataModifiedElement.dt, 'day_short', true), formatDate(openweatherDataModifiedElement.dt, 'day_month', true)];
         CHART_DATA.legend.push(dataLegend);
-        CHART_DATA.data.push(calculateTemperature(openweatherDataModifiedElement.main.temp, TEMPERATURE_SCALES.CELCIUS));
+        CHART_DATA.data.push(calculateTemperature(openweatherDataModifiedElement.main.temp, ENUMS.TEMPERATURE_SCALES.CELCIUS));
     });
 
     const CTX = nextFiveDaysChart.getContext('2d');
@@ -291,10 +315,10 @@ function drawForecastTemperature(openweatherDataModified) {
 function calculateTemperature(value, scale) {
     let temperature = 0;
     switch (scale) {
-        case TEMPERATURE_SCALES.CELCIUS:
+        case ENUMS.TEMPERATURE_SCALES.CELCIUS:
             temperature = Math.round(parseFloat(value) - 273.15);
             break;
-        case TEMPERATURE_SCALES.FAHRENHEIT:
+        case ENUMS.TEMPERATURE_SCALES.FAHRENHEIT:
             temperature = Math.round(((parseFloat(value) - 273.15) * 1.8) + 32);
             break;
         default:
