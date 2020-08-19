@@ -57,10 +57,3 @@ function getCity() {
     elem.cityElement.value = '';
     return city;
 }
-
-
-
-
-
-
-

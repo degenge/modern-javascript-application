@@ -91,6 +91,11 @@ h1 {
 //  background-image: linear-gradient(to right, #5927ca, #6f2dd8);
 //}
 
+#spinner {
+  display: block;
+  color: $colorMain;
+}
+
 /* location-and-date */
 .location-date {
   width: 100%;
