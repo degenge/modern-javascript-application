@@ -6,30 +6,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <!-- Bootstrap CSS -->
-    <link
-            rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-            crossorigin="anonymous"
-    />
-
-    <!--Chart.js-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css"
-          integrity="sha512-SUJFImtiT87gVCOXl3aGC00zfDl6ggYAw5+oheJvRJ8KBXZrr/TMISSdVJ5bBarbQDRC2pR5Kto3xTR0kpZInA=="
-          crossorigin="anonymous" />
-
-    <!--<script src="script/index.js" type="module" defer ></script >-->
     <script src="dist/bundle.js" type="module" defer ></script >
-
-    <!-- style -->
-    <link rel="stylesheet" href="css/style.css" />
 
     <link
             href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap"
             rel="stylesheet"
     />
-    <link rel="stylesheet" href="vendor/font-awesome/css/all.css" />
+
+    <!--<link rel="stylesheet" href="vendor/font-awesome/css/all.css" />-->
 
     <title >Weather app</title >
 </head >
@@ -56,192 +40,171 @@
         </div >
     </div >
 
-    <div id="spinner">Loading...</div>
+    <div id="spinner" >Loading...</div >
 
-    <div class="row location-date" >
-        <div class="col-12" >
-            <h2 id="location" class="location-date__location" ></h2 >
-            <div id="currentDate" class="location-date__date" ></div >
-        </div >
-    </div >
+    <div id="weather-container" >
 
-    <!--start current temperature-->
-    <div class="row" >
-
-        <div class="col-md-6 col-sm-12 current-temperature" >
-
-            <div class="row" >
-
-                <div class="col-sm-6 current-temperature__icon-container" >
-                    <img id="currentTemperatureIcon" src="" class="current-temperature__icon" alt="" >
-                </div >
-
-                <div class="col-sm-6 current-temperature__content-container" >
-                    <div id="currentTemperatureValue" class="current-temperature__value" ></div >
-                    <div id="currentTemperatureFeelsLikeValue" class="current-temperature-feelslike__value" ></div >
-                    <div id="currentTemperatureSummary" class="current-temperature__summary" ></div >
-                </div >
-
-            </div >
-            <!--end current temperature-->
-        </div >
-
-        <!--start current stats-->
-        <div class="col-md-6 col-sm-12 current-stats" >
-
-            <div class="row" >
-                <div class="col-md-3 col-sm-6" >
-                    <div id="currentStatsTemperatureHighValue" class="current-stats__value" ></div >
-                    <div class="text-muted current-stats__label" >High</div >
-                </div >
-                <div class="col-md-3 col-sm-6" >
-                    <div id="currentStatsWindSpeedValue" class="current-stats__value" ></div >
-                    <div class="text-muted current-stats__label" >Wind</div >
-                </div >
-                <div class="col-md-3 col-sm-6" >
-                    <div id="currentStatsPressureValue" class="current-stats__value" ></div >
-                    <div class="text-muted current-stats__label" >Pressure</div >
-                </div >
-                <div class="col-md-3 col-sm-6" >
-                    <div id="currentStatsSunriseValue" class="current-stats__value" ></div >
-                    <div class="text-muted current-stats__label" >Sunrise</div >
-                </div >
-            </div >
-
-            <div class="row" >
-                <div class="col-md-3 col-sm-6" >
-                    <div id="currentStatsTemperatureLowValue" class="current-stats__value" ></div >
-                    <div class="text-muted current-stats__label" >Low</div >
-                </div >
-                <div class="col-md-3 col-sm-6" >
-                    <div id="currentStatsCloudsValue" class="current-stats__value" ></div >
-                    <div class="text-muted current-stats__label" >Clouds</div >
-                </div >
-                <div class="col-md-3 col-sm-6" >
-                    <div id="currentStatsHumidityValue" class="current-stats__value" ></div >
-                    <div class="text-muted current-stats__label" >Humidity</div >
-                </div >
-                <div class="col-md-3 col-sm-6" >
-                    <div id="currentStatsSunsetValue" class="current-stats__value" ></div >
-                    <div class="text-muted current-stats__label" >Sunset</div >
-                </div >
-            </div >
-
-        </div >
-
-    </div >
-    <!--end current stats-->
-
-    <!--todo: implement weather by hours-->
-    <!--start weather by hours-->
-    <!--<div class="weather-by-hour">-->
-    <!--<h2 class="weather-by-hour__heading">Today's weather</h2>-->
-    <!--<div class="weather-by-hour__container">-->
-    <!--<div class="weather-by-hour__item">-->
-    <!--<div class="weather-by-hour__hour">3am</div>-->
-    <!--<img src="icons/mostly-sunny.svg" alt="Mostly sunny">-->
-    <!--<div>14°</div>-->
-    <!--</div>-->
-    <!--<div class="weather-by-hour__item">-->
-    <!--<div class="weather-by-hour__hour">6am</div>-->
-    <!--<img src="icons/mostly-sunny.svg" alt="Mostly sunny">-->
-    <!--<div>16°</div>-->
-    <!--</div>-->
-    <!--<div class="weather-by-hour__item">-->
-    <!--<div class="weather-by-hour__hour">9am</div>-->
-    <!--<img src="icons/mostly-sunny.svg" alt="Mostly sunny">-->
-    <!--<div>17°</div>-->
-    <!--</div>-->
-    <!--<div class="weather-by-hour__item">-->
-    <!--<div class="weather-by-hour__hour">12pm</div>-->
-    <!--<img src="icons/mostly-sunny.svg" alt="Mostly sunny">-->
-    <!--<div>19°</div>-->
-    <!--</div>-->
-    <!--<div class="weather-by-hour__item">-->
-    <!--<div class="weather-by-hour__hour">3pm</div>-->
-    <!--<img src="icons/sunny.svg" alt="Sunny">-->
-    <!--<div>21°</div>-->
-    <!--</div>-->
-    <!--<div class="weather-by-hour__item">-->
-    <!--<div class="weather-by-hour__hour">6pm</div>-->
-    <!--<img src="icons/sunny.svg" alt="Sunny">-->
-    <!--<div>20°</div>-->
-    <!--</div>-->
-    <!--<div class="weather-by-hour__item">-->
-    <!--<div class="weather-by-hour__hour">9pm</div>-->
-    <!--<img src="icons/mostly-sunny.svg" alt="Mostly sunny">-->
-    <!--<div>18°</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--end weather by hours-->
-
-    <!--next 5 days-->
-    <div class="next-5-days" >
-
-        <div class="row" >
-
-            <div class="col-md-8 col-sm-6" >
-                <h2 class="next-5-days__heading" >Next 5 days</h2 >
-            </div >
-
-            <div class="col-md-4 col-sm-6 text-right" >
-                <div class="btn-group" role="group" aria-label="Basic example" >
-                    <button id="day" type="button" class="btn btn-primary active" >Day</button >
-                    <button id="night" type="button" class="btn btn-primary" >Night</button >
-                </div >
-            </div >
-
-        </div >
-
-        <div class="row" >
-
+        <div class="row location-date" >
             <div class="col-12" >
+                <h2 id="location" class="location-date__location" ></h2 >
+                <div id="currentDate" class="location-date__date" ></div >
+            </div >
+        </div >
 
-                <div id="nextFiveDaysContainer" class="next-5-days__container" ></div >
+        <!--start current temperature-->
+        <div class="row" >
+
+            <div class="col-md-6 col-sm-12 current-temperature" >
+
+                <div class="row" >
+
+                    <div class="col-sm-6 current-temperature__icon-container" >
+                        <img id="currentTemperatureIcon" src="" class="current-temperature__icon" alt="" >
+                    </div >
+
+                    <div class="col-sm-6 current-temperature__content-container" >
+                        <div id="currentTemperatureValue" class="current-temperature__value" ></div >
+                        <div id="currentTemperatureFeelsLikeValue" class="current-temperature-feelslike__value" ></div >
+                        <div id="currentTemperatureSummary" class="current-temperature__summary" ></div >
+                    </div >
+
+                </div >
+                <!--end current temperature-->
+            </div >
+
+            <!--start current stats-->
+            <div class="col-md-6 col-sm-12 current-stats" >
+
+                <div class="row" >
+                    <div class="col-md-3 col-sm-6" >
+                        <div id="currentStatsTemperatureHighValue" class="current-stats__value" ></div >
+                        <div class="text-muted current-stats__label" >High</div >
+                    </div >
+                    <div class="col-md-3 col-sm-6" >
+                        <div id="currentStatsWindSpeedValue" class="current-stats__value" ></div >
+                        <div class="text-muted current-stats__label" >Wind</div >
+                    </div >
+                    <div class="col-md-3 col-sm-6" >
+                        <div id="currentStatsPressureValue" class="current-stats__value" ></div >
+                        <div class="text-muted current-stats__label" >Pressure</div >
+                    </div >
+                    <div class="col-md-3 col-sm-6" >
+                        <div id="currentStatsSunriseValue" class="current-stats__value" ></div >
+                        <div class="text-muted current-stats__label" >Sunrise</div >
+                    </div >
+                </div >
+
+                <div class="row" >
+                    <div class="col-md-3 col-sm-6" >
+                        <div id="currentStatsTemperatureLowValue" class="current-stats__value" ></div >
+                        <div class="text-muted current-stats__label" >Low</div >
+                    </div >
+                    <div class="col-md-3 col-sm-6" >
+                        <div id="currentStatsCloudsValue" class="current-stats__value" ></div >
+                        <div class="text-muted current-stats__label" >Clouds</div >
+                    </div >
+                    <div class="col-md-3 col-sm-6" >
+                        <div id="currentStatsHumidityValue" class="current-stats__value" ></div >
+                        <div class="text-muted current-stats__label" >Humidity</div >
+                    </div >
+                    <div class="col-md-3 col-sm-6" >
+                        <div id="currentStatsSunsetValue" class="current-stats__value" ></div >
+                        <div class="text-muted current-stats__label" >Sunset</div >
+                    </div >
+                </div >
 
             </div >
 
         </div >
+        <!--end current stats-->
+
+        <!--todo: implement weather by hours-->
+        <!--start weather by hours-->
+        <!--<div class="weather-by-hour">-->
+        <!--<h2 class="weather-by-hour__heading">Today's weather</h2>-->
+        <!--<div class="weather-by-hour__container">-->
+        <!--<div class="weather-by-hour__item">-->
+        <!--<div class="weather-by-hour__hour">3am</div>-->
+        <!--<img src="icons/mostly-sunny.svg" alt="Mostly sunny">-->
+        <!--<div>14°</div>-->
+        <!--</div>-->
+        <!--<div class="weather-by-hour__item">-->
+        <!--<div class="weather-by-hour__hour">6am</div>-->
+        <!--<img src="icons/mostly-sunny.svg" alt="Mostly sunny">-->
+        <!--<div>16°</div>-->
+        <!--</div>-->
+        <!--<div class="weather-by-hour__item">-->
+        <!--<div class="weather-by-hour__hour">9am</div>-->
+        <!--<img src="icons/mostly-sunny.svg" alt="Mostly sunny">-->
+        <!--<div>17°</div>-->
+        <!--</div>-->
+        <!--<div class="weather-by-hour__item">-->
+        <!--<div class="weather-by-hour__hour">12pm</div>-->
+        <!--<img src="icons/mostly-sunny.svg" alt="Mostly sunny">-->
+        <!--<div>19°</div>-->
+        <!--</div>-->
+        <!--<div class="weather-by-hour__item">-->
+        <!--<div class="weather-by-hour__hour">3pm</div>-->
+        <!--<img src="icons/sunny.svg" alt="Sunny">-->
+        <!--<div>21°</div>-->
+        <!--</div>-->
+        <!--<div class="weather-by-hour__item">-->
+        <!--<div class="weather-by-hour__hour">6pm</div>-->
+        <!--<img src="icons/sunny.svg" alt="Sunny">-->
+        <!--<div>20°</div>-->
+        <!--</div>-->
+        <!--<div class="weather-by-hour__item">-->
+        <!--<div class="weather-by-hour__hour">9pm</div>-->
+        <!--<img src="icons/mostly-sunny.svg" alt="Mostly sunny">-->
+        <!--<div>18°</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--end weather by hours-->
+
+        <!--next 5 days-->
+        <div class="next-5-days" >
+
+            <div class="row" >
+
+                <div class="col-md-8 col-sm-6" >
+                    <h2 class="next-5-days__heading" >Next 5 days</h2 >
+                </div >
+
+                <div class="col-md-4 col-sm-6 text-right" >
+                    <div class="btn-group" role="group" aria-label="Basic example" >
+                        <button id="day" type="button" class="btn btn-primary active" >Day</button >
+                        <button id="night" type="button" class="btn btn-primary" >Night</button >
+                    </div >
+                </div >
+
+            </div >
+
+            <div class="row" >
+
+                <div class="col-12" >
+
+                    <div id="nextFiveDaysContainer" class="next-5-days__container" ></div >
+
+                </div >
+
+            </div >
+
+        </div >
+        <!--end next 8 days-->
+
+        <!--start temperature chart-->
+        <div >
+            <canvas id="nextFiveDaysChart" width="400" height="150" ></canvas >
+        </div >
+        <!--end temperature chart-->
 
     </div >
-    <!--end next 8 days-->
-
-    <!--start temperature chart-->
-    <div >
-        <canvas id="nextFiveDaysChart" width="400" height="150" ></canvas >
-    </div >
-    <!--end temperature chart-->
 
     <!-- Footer -->
     <footer ><p class="footer__paragraph" >© Gerrit Degenhardt</p ></footer >
 
 </main >
-
-
-<!-- Optional JavaScript -->
-
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script
-        src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"
-></script >
-<script
-        src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"
-></script >
-<script
-        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-        crossorigin="anonymous"
-></script >
-
-<!--Chart.js-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"
-        integrity="sha512-QEiC894KVkN9Tsoi6+mKf8HaCLJvyA6QIRzY5KrfINXYuP9NxdIkRQhGq3BZi0J4I7V5SidGM3XUQ5wFiMDuWg=="
-        crossorigin="anonymous" ></script >
 
 </body >
 </html >
